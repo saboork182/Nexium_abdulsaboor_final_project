@@ -1,5 +1,7 @@
 'use client';
+
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function RecipeMainPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -41,7 +43,6 @@ export default function RecipeMainPage() {
         {/* Menu Button */}
         <div className="relative">
           <button onClick={toggleMenu} className="p-2 rounded hover:bg-gray-200">
-            {/* Menu Icon */}
             <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
@@ -74,11 +75,15 @@ export default function RecipeMainPage() {
             key={i}
             className="bg-white rounded-xl shadow hover:shadow-md transition border overflow-hidden"
           >
-            <img
-              src={recipe.image}
-              alt={recipe.name}
-              className="w-full h-48 object-cover"
-            />
+            <div className="relative w-full h-48">
+              <Image
+                src={recipe.image}
+                alt={recipe.name}
+                layout="fill" // Important
+                objectFit="cover" // Ensures it fills nicely
+                priority={i < 3} // Improves loading for first images
+              />
+            </div>
             <div className="p-4">
               <h3 className="text-lg font-semibold mb-1">{recipe.name}</h3>
               <p className="text-sm text-gray-600">
